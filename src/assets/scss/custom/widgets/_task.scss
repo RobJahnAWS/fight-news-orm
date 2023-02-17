@@ -1,0 +1,26 @@
+.todo-widget {
+    .todo-list {
+        .todo-item {
+            border: 0px;
+            margin-bottom: 0px;
+            padding: 20px 15px 15px 0px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .custom-checkbox {
+                width: 100%;
+
+                .todo-label {
+                    font-weight: 400;
+                    width: 100%;
+                }
+            }
+        }
+
+        .completed label {
+            text-decoration: line-through;
+        }
+    }
+}

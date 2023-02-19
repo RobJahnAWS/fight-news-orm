@@ -4,8 +4,11 @@ export function AuthHeader() {
   // return authorization header with jwt token
   const currentUser = AuthenticationService.currentUserValue;
   if (currentUser && currentUser.token) {
-    return { Authorization: `Bearer ${currentUser.token}` };
+    return { Authorization: `Bearer ${currentUser.token}`, "Content-Type": "application/json", "ngrok-skip-browser-warning": "any", };
   } else {
-    return {};
+    return {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "any",
+    }
   }
 }

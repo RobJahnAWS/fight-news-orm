@@ -94,7 +94,7 @@ const NewArticle = () => {
 			formData.append("description", data.description);
 			formData.append("isMain", data.isMain);
 			fetch(`${process.env.REACT_APP_API_ENDPOINT}articles/upload`, {
-				method: "POST",
+				method: "PUT",
 				body: formData,
 				// headers: { "Content-Type": "application/json" },
 				// body: JSON.stringify({ username, password }),

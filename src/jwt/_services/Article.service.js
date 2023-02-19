@@ -8,6 +8,7 @@ export const ArticleService = {
 
 function getAllArticles() {
 	const requestOptions = { method: "GET", headers: AuthHeader() };
+	console.log(AuthHeader())
 	return fetch(
 		`${process.env.REACT_APP_API_ENDPOINT}articles`,
 		requestOptions

@@ -7,6 +7,9 @@ import { History } from "./jwt/_helpers";
 import { PrivateRoute } from "./routes/PrivateRoutes";
 import BlankLayout from "./layouts/BlankLayout";
 import EditArticle from "./views/pages/EditArticle";
+
+require('dotenv').config()
+
 const App = () => {
     //console.log(indexRoutes);
     //const [currentUser, SetcurrentUser] = useState(null);

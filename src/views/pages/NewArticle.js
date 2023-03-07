@@ -89,29 +89,30 @@ const NewArticle = () => {
 			acceptedFiles.forEach((file) => {
 				formData.append("files", file);
 			});
-			//formData.append("body", JSON.stringify(data));
-			formData.append("title", data.title);
-			formData.append("description", data.description);
-			formData.append("isMain", data.isMain);
-			fetch(`${process.env.REACT_APP_API_ENDPOINT}articles/upload`, {
-				method: "PUT",
-				body: formData,
-				// headers: { "Content-Type": "application/json" },
-				// body: JSON.stringify({ username, password }),
-			})
-				.then((response) => response.json())
-				.then((result) => {
-					console.log(result);
-					// reset();
-					// acceptedFiles.length = 0;
-					// acceptedFiles.splice(0, acceptedFiles.length);
-					// inputRef.current.value = "";
-					// setFiles([]);
-
-					history.push("/dashboard");
-				})
-				.catch((error) => console.log("error", error));
 		}
+
+		//formData.append("body", JSON.stringify(data));
+		formData.append("title", data.title);
+		formData.append("description", data.description);
+		formData.append("isMain", data.isMain);
+		fetch(`${process.env.REACT_APP_API_ENDPOINT}articles/upload`, {
+			method: "POST",
+			body: formData,
+			// headers: { "Content-Type": "application/json" },
+			// body: JSON.stringify({ username, password }),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				console.log(result);
+				// reset();
+				// acceptedFiles.length = 0;
+				// acceptedFiles.splice(0, acceptedFiles.length);
+				// inputRef.current.value = "";
+				// setFiles([]);
+
+				history.push("/dashboard");
+			})
+			.catch((error) => console.log("error", error));
 	};
 	console.log(errors);
 	return (

@@ -36,7 +36,7 @@ function deleteArticle(productId) {
 }
 function editArticle(productId, body) {
 	const requestOptions = {
-		method: "PUT",
+		method: "POST",
 		headers: {
 			"Content-type": "application/json",
 		},

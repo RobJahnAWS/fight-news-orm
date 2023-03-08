@@ -82,7 +82,7 @@ const EditArticle = () => {
 	useEffect(() => {
 		const loadArticle = async () => {
 			const result = await Axios.get(
-				`${process.env.REACT_APP_API_ENDPOINT}articles/by-id/${id}`
+				`${process.env.REACT_APP_API_ENDPOINT}articles/by-id/${id}`, {headers: {"ngrok-skip-browser-warning": "any"}}
 			);
 			reset(result.data);
 			setData(result.data);

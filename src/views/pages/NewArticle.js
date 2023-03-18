@@ -91,30 +91,21 @@ const NewArticle = () => {
 			});
 		}
 
-		//formData.append("body", JSON.stringify(data));
 		formData.append("title", data.title);
 		formData.append("description", data.description);
+		formData.append("youtube", data.youtube);
 		formData.append("isMain", data.isMain);
 		fetch(`${process.env.REACT_APP_API_ENDPOINT}articles/upload`, {
 			method: "POST",
 			body: formData,
-			// headers: { "Content-Type": "application/json" },
-			// body: JSON.stringify({ username, password }),
 		})
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result);
-				// reset();
-				// acceptedFiles.length = 0;
-				// acceptedFiles.splice(0, acceptedFiles.length);
-				// inputRef.current.value = "";
-				// setFiles([]);
-
 				history.push("/dashboard");
 			})
 			.catch((error) => console.log("error", error));
 	};
-	console.log(errors);
+
 	return (
 		<div>
 			<h2 className="">Create Article</h2>
@@ -132,13 +123,6 @@ const NewArticle = () => {
 
 				<Form.Group>
 					<Form.Label>Description</Form.Label>
-					{/* <Form.Control
-                        ref={register({ required: true })}
-                        as="textarea"
-                        name="description"
-                        isInvalid={errors.description}
-                        rows="6"
-                    /> */}
 					<Controller
 						as={<WYSIWYGEditor />}
 						name="description"
@@ -170,6 +154,16 @@ const NewArticle = () => {
 						)}
 					</div>
 				</Form.Group>
+
+				<Form.Group style={{"padding":"20px 0"}}>
+					<Form.Label>YouTube Url</Form.Label>
+					<Form.Control
+						type="text"
+						name="youtube"
+						ref={register()}
+					/>
+				</Form.Group>
+
 				<Form.Group>
 					<aside className="thumb-container">{thumbs}</aside>
 				</Form.Group>

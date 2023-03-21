@@ -13,6 +13,9 @@ import {
 import draftToHtml from "draftjs-to-html";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import TagsInput from 'react-tagsinput'
+
+import 'react-tagsinput/react-tagsinput.css'
 
 const WYSIWYGEditor = (props) => {
 	const [editorState, setEditorState] = useState(
@@ -52,6 +55,7 @@ const NewArticle = () => {
 	});
 	const history = useHistory();
 	const [files, setFiles] = useState([]);
+	const [tags, setTags] = useState([])
 	const onDrop = useCallback((acceptedFiles) => {
 		// Do something with the files
 		setFiles(
@@ -89,6 +93,10 @@ const NewArticle = () => {
 			acceptedFiles.forEach((file) => {
 				formData.append("files", file);
 			});
+		}
+
+		if (tags.length) {
+			formData.append("tags", tags.join());
 		}
 
 		formData.append("title", data.title);
@@ -155,6 +163,10 @@ const NewArticle = () => {
 					</div>
 				</Form.Group>
 
+				<Form.Group>
+					<aside className="thumb-container">{thumbs}</aside>
+				</Form.Group>
+
 				<Form.Group style={{"padding":"20px 0"}}>
 					<Form.Label>YouTube Url</Form.Label>
 					<Form.Control
@@ -164,9 +176,10 @@ const NewArticle = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group>
-					<aside className="thumb-container">{thumbs}</aside>
-				</Form.Group>
+				<div style={{"padding":"20px 0"}}>
+					<div style={{"font-weight":'bold'}}>Tags - Enter a tag and hit enter. Enter as many as you like.</div>
+					<TagsInput value={tags} onChange={setTags} />
+				</div>
 
 				<Button variant="success" type="submit">
 					SAVE

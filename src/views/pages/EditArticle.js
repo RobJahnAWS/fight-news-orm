@@ -14,6 +14,9 @@ import {
 import draftToHtml from "draftjs-to-html";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import TagsInput from 'react-tagsinput'
+
+import 'react-tagsinput/react-tagsinput.css'
 
 const WYSIWYGEditor = (props) => {
 	const [editorState, setEditorState] = useState(
@@ -46,6 +49,7 @@ const WYSIWYGEditor = (props) => {
 const EditArticle = () => {
 	const { register, handleSubmit, reset, errors, control } = useForm({});
 	const [files, setFiles] = useState([]);
+	const [tags, setTags] = useState([])
 	const { id } = useParams();
 	const history = useHistory();
 	const [data, setData] = useState(false);
@@ -86,6 +90,7 @@ const EditArticle = () => {
 			);
 			reset(result.data);
 			setData(result.data);
+			setTags(result.data?.tags ? result.data.tags.split(",") : [])
 		};
 		loadArticle();
 	}, []);
@@ -97,6 +102,8 @@ const EditArticle = () => {
 			title: data.title,
 			description: data.description,
 			isMain: data.isMain,
+			youtube: data.youtube,
+			tags: tags? tags.join() : null,
 		});
 
 		history.push("/dashboard");
@@ -171,6 +178,20 @@ const EditArticle = () => {
 				<Form.Group>
 					<aside className="thumb-container">{thumbs}</aside>
 				</Form.Group>
+
+				<Form.Group style={{"padding":"20px 0"}}>
+					<Form.Label>YouTube Url</Form.Label>
+					<Form.Control
+						type="text"
+						name="youtube"
+						ref={register()}
+					/>
+				</Form.Group>
+
+				<div style={{"padding":"20px 0"}}>
+					<div style={{"font-weight":'bold'}}>Tags - Enter a tag and hit enter. Enter as many as you like.</div>
+					<TagsInput value={tags} onChange={setTags} />
+				</div>
 
 				<Button variant="success" type="submit">
 					SAVE

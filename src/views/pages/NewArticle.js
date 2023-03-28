@@ -14,8 +14,10 @@ import draftToHtml from "draftjs-to-html";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import TagsInput from 'react-tagsinput'
+import 'js-loading-overlay'
 
 import 'react-tagsinput/react-tagsinput.css'
+import imageCompression from 'browser-image-compression';
 
 const WYSIWYGEditor = (props) => {
 	const [editorState, setEditorState] = useState(
@@ -56,6 +58,7 @@ const NewArticle = () => {
 	const history = useHistory();
 	const [files, setFiles] = useState([]);
 	const [tags, setTags] = useState([])
+	const [disabled, setDisabled] = useState(false)
 	const onDrop = useCallback((acceptedFiles) => {
 		// Do something with the files
 		setFiles(
@@ -86,11 +89,26 @@ const NewArticle = () => {
 		</div>
 	));
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
 		console.log(data);
 		let formData = new FormData();
-		if (acceptedFiles.length) {
-			acceptedFiles.forEach((file) => {
+		setDisabled(true)
+
+		const compressedFiles = []
+		const options = {
+			maxSizeMB: 1,
+			maxWidthOrHeight: 1920,
+			useWebWorker: true,
+		  }
+		try {
+			const compressedFile = await imageCompression(acceptedFiles[0], options);
+			compressedFiles.push(compressedFile)
+		} catch (error) {
+			console.log(error);
+		}
+
+		if (compressedFiles.length) {
+			compressedFiles.forEach((file) => {
 				formData.append("files", file);
 			});
 		}
@@ -181,7 +199,7 @@ const NewArticle = () => {
 					<TagsInput value={tags} onChange={setTags} />
 				</div>
 
-				<Button variant="success" type="submit">
+				<Button variant="success" type="submit" disabled={disabled}>
 					SAVE
 				</Button>
 			</form>
